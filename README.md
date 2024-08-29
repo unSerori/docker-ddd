@@ -12,6 +12,8 @@ image Golang: go version go1.22.2 linux/amd64
 
 ## インストール
 
+プロジェクトをコンテナーの中にcloneするため、ホストOS上にGitHubに登録済みの鍵があること
+
 1. Dockerをインストール
 2. このリポジトリをclone
 
