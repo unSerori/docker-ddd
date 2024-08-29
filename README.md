@@ -6,13 +6,13 @@
 
 ### 環境
 
-Visual Studio Code: 1.88.1
-golang.Go: v0.41.4
-image Golang: go version go1.22.2 linux/amd64
+Visual Studio Code: 1.88.1  
+golang.Go: v0.41.4  
+image Golang: go version go1.22.2 linux/amd64  
 
 ## インストール
 
-プロジェクトをコンテナーの中にcloneするため、ホストOS上にGitHubに登録済みの鍵があること
+プロジェクトをコンテナーの中にcloneするため、ホストOS上の`~/.ssh/`にGitHubに登録済みの鍵があること
 
 1. Dockerをインストール
 2. このリポジトリをclone
@@ -30,6 +30,7 @@ image Golang: go version go1.22.2 linux/amd64
     MYSQL_DATABASE: 使用するdatabase名: ddd_db
     TZ: タイムゾーン: Asia/Tokyo
     CONTAINER_PASS_FOR_SSH_AGENT: 開発用コンテナがssh-agentコンテナを介してgithubとssh接続するときに、ssh-agentコンテナが開発用コンテナにパスワードssh接続するためのパスワード: container_pass_for_ssh_agent
+    HOST_SSH_PATH: ホストOS上のGitHubに登録済みの鍵ファイルの場所: ~/.ssh
     ```
 
 4. 開発またはデプロイ用のスクリプトで起動
@@ -48,5 +49,5 @@ TODO: コンテナーを建てたり壊したりする用のスクリプトフ�
 
 ## 開発者
 
-Author:[unSerori]
+Author:[unSerori]  
 Mail:[]
