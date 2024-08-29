@@ -1,0 +1,10 @@
+# docker-composeで使う.env
+.env
+
+# memo
+memo.txt
+
+# .vscode
+.vscode/
+
+# volumes
