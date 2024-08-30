@@ -55,11 +55,11 @@ image Golang: go version go1.22.2 linux/amd64
 
         詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#環境構築)を参照TODO:
 
-4. 開発またはデプロイ用のスクリプトで起動
+4. 開発またはデプロイ用のスクリプトで起動TODO:
 
     ```bash
     # デプロイ用の設定でビルド
-    bash TODO:
+    bash deploy-rebuild.sh
     ```
 
     その他のスクリプトファイルは[スクリプトファイルたち](#スクリプトファイルたち)
