@@ -1,5 +1,6 @@
 # docker-composeで使う.env
 .env
+*.env*
 
 # memo
 memo.txt
@@ -8,3 +9,5 @@ memo.txt
 .vscode/
 
 # volumes
+go-api/ddd/
+mysql-db/db_data/
