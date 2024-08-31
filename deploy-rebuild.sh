@@ -7,4 +7,4 @@ docker compose down --rmi all --remove-orphans
 DOCKER_BUILDKIT=1 docker compose build --no-cache
 
 # 起動
-docker compose up -d
+docker compose -f compose.yml -f compose.deploy.yml up -d
