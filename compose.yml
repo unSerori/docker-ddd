@@ -5,7 +5,6 @@ services:  # コンポースするサービスたち
         build:  # ビルド設定
             context: ./go-api  # ビルドプロセスが実行されるパス
             dockerfile: Dockerfile  # Dockerfileのパス
-        image: ddd_go_api:latest # image name
         environment: # 環境変数
             TZ: ${TZ}
         tty: true # コンテナ内で対話的操作を可能

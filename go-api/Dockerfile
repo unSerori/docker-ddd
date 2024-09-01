@@ -1,3 +1,48 @@
+# 開発用のステージ
+
+# Stage1: 開発環境に必要なツールとソースを入れるベースイメージ
+FROM golang:1.22.2-bullseye AS develop
+
+# 作業ディレクトリ
+WORKDIR /root/ddd
+
+# aptでパッケージリストの更新とgitインストール
+RUN apt update && apt install -y git
+
+# デバッガインストール
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
+# ソースコードのリポジトリをクローン
+RUN git clone https://github.com/unSerori/ddd.git .
+
+# 必要なファイルのコピー
+COPY .env.go-api-srv .env
+
+# ssh-agentコンテナとのssh通信のための設定 ++++++++
+
+# envに記述したパスワードで設定し、ssh-agentコンテナからの接続で使う
+ARG CONTAINER_PASS_FOR_SSH_AGENT
+# パスワード、SSHサーバーセットアップ
+RUN \
+    # 接続用パスワード設定
+    echo "root:${CONTAINER_PASS_FOR_SSH_AGENT}" | chpasswd && \
+    # SSHサーバーをインストール
+    apt-get install -y openssh-server && \
+    mkdir /var/run/sshd && \
+    # SSHサーバーの設定を変更
+    sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+# ssh通信を受け取るポート
+EXPOSE 22
+
+# ssh-agentコンテナとのssh通信のための設定 --------
+
+# httpポートの公開 ここにクライアントがAPIを投げる
+EXPOSE 4561
+
+# sshdサーバーで起動
+CMD [ "/usr/sbin/sshd", "-D" ]
+
 # デプロイ用のステージ
 
 # Stage1: ビルドのためにgoのイメージ
