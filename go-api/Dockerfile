@@ -4,16 +4,13 @@
 FROM golang:1.22.2-bullseye AS develop
 
 # 作業ディレクトリ
-WORKDIR /root/ddd
+WORKDIR /root/copy
 
 # aptでパッケージリストの更新とgitインストール
 RUN apt update && apt install -y git
 
 # デバッガインストール
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
-
-# ソースコードのリポジトリをクローン
-RUN git clone https://github.com/unSerori/ddd.git .
 
 # 必要なファイルのコピー
 COPY .env.go-api-srv .env
@@ -40,8 +37,12 @@ EXPOSE 22
 # httpポートの公開 ここにクライアントがAPIを投げる
 EXPOSE 4561
 
-# sshdサーバーで起動
-CMD [ "/usr/sbin/sshd", "-D" ]
+# 実行用のスクリプトあげる
+COPY ./execute.sh .
+RUN chmod +x ./execute.sh
+
+# スクリプトで起動
+ENTRYPOINT [ "./execute.sh" ]
 
 # デプロイ用のステージ
 

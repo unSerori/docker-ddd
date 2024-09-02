@@ -5,6 +5,9 @@ services:  # コンポースするサービスたち
             target: develop
             args: # ビルド時の変数
                 CONTAINER_PASS_FOR_SSH_AGENT: ${CONTAINER_PASS_FOR_SSH_AGENT:-password}
+        volumes:  # ボリュームの保持。
+            - "./go-api/ddd:/root/ddd" # 開発環境
+            - "./go-api/log/:/root/log/" # log
         ports: # ホストマシンのポートとコンテナのポートをマッピング 
             - "4561:4561"
         networks: # 定義したネットワークを利用

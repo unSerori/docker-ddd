@@ -10,4 +10,5 @@ memo.txt
 
 # volumes
 go-api/ddd/
+go-api/log/
 mysql-db/db_data/
