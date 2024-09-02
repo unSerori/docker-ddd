@@ -19,17 +19,17 @@ cd "$sh_dir" || {
 }
 
 # log
-echo "DATE: $(date)" 2>&1 | tee -a /root/log/log.log # datetime
-echo "PWD: $(pwd)" 2>&1 | tee -a /root/log/log.log   # /root/copy
-echo "Checking directories: /root/" 2>&1 | tee -a /root/log/log.log
-find /root/ -maxdepth 0 -exec ls -la {} + 2>&1 | tee -a /root/log/log.log # ls -la /root/
-echo "Checking directories: /root/ddd" 2>&1 | tee -a /root/log/log.log
-find /root/ddd -maxdepth 0 -exec ls -la {} + 2>&1 | tee -a /root/log/log.log # ls -la /root/ddd/
+echo "DATE: $(date)" 2>&1 | tee -a /root/log/execute.log # datetime
+echo "PWD: $(pwd)" 2>&1 | tee -a /root/log/execute.log   # /root/copy
+echo "Checking directories: /root/" 2>&1 | tee -a /root/log/execute.log
+find /root/ -maxdepth 0 -exec ls -la {} + 2>&1 | tee -a /root/log/execute.log # ls -la /root/
+echo "Checking directories: /root/ddd" 2>&1 | tee -a /root/log/execute.log
+find /root/ddd -maxdepth 0 -exec ls -la {} + 2>&1 | tee -a /root/log/execute.log # ls -la /root/ddd/
 
 # volumesされているはずのディレクトリが空(初回ビルド時)なら、
 if [ -d "/root/ddd/" ] && [ -z "$(ls -A "/root/ddd/")" ]; then # -dでディレクトリかどうか確認し、かつ、-zでls -Aによるリスト化したフォルダ内のリストが空なら真
     # log
-    echo Clone now... 2>&1 | tee -a /root/log/log.log
+    echo Clone now... 2>&1 | tee -a /root/log/execute.log
 
     # ソースコードのリポジトリをクローン、
     git clone https://github.com/unSerori/ddd.git /root/ddd/./
@@ -37,13 +37,13 @@ if [ -d "/root/ddd/" ] && [ -z "$(ls -A "/root/ddd/")" ]; then # -dでディレ�
     mv .env /root/ddd/
 else
     # log
-    echo Do not clone. 2>&1 | tee -a /root/log/log.log
+    echo Do not clone. 2>&1 | tee -a /root/log/execute.log
 fi
 
 # log
-echo End of clone process branch. 2>&1 | tee -a /root/log/log.log
-echo Start main process... 2>&1 | tee -a /root/log/log.log
-echo -e -n "\n" 2>&1 | tee -a /root/log/log.log
+echo End of clone process branch. 2>&1 | tee -a /root/log/execute.log
+echo Start main process... 2>&1 | tee -a /root/log/execute.log
+echo -e -n "\n" 2>&1 | tee -a /root/log/execute.log
 
 # メインプロセス(SSHサーバーで起動)を実行
 /usr/sbin/sshd -D &
