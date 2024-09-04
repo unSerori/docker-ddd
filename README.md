@@ -2,7 +2,8 @@
 
 ## 概要
 
-[qiitaで書いたDDD備忘録記事のサンプルリポジトリ](https://github.com/unSerori/ddd)を動かすDocker環境
+[qiitaで書いたDDD備忘録記事のサンプルリポジトリ](https://github.com/unSerori/ddd)を動かすDocker環境  
+cloneしてスクリプト実行で、自動的にコンテナー作成と開発環境（: またはデプロイ）を行う  
 
 ### 環境
 
@@ -53,7 +54,7 @@ image Golang: go version go1.22.2 linux/amd64
         REQ_BODY_MAX_SIZE=リクエストボディのマックスサイズ（50MBなら52428800）: 52428800
         ```
 
-        詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#環境構築)を参照TODO:
+        詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#env)を参照TODO:
 
 4. 開発またはデプロイ用のスクリプトで起動TODO:
 
