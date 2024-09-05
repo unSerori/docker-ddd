@@ -59,6 +59,9 @@ image Golang: go version go1.22.2 linux/amd64
 4. 開発またはデプロイ用のスクリプトで起動TODO:
 
     ```bash
+    # 開発用の設定でビルド
+    bash develop-rebuild.sh
+
     # デプロイ用の設定でビルド
     bash deploy-rebuild.sh
     ```
@@ -67,9 +70,15 @@ image Golang: go version go1.22.2 linux/amd64
 
 ## スクリプトファイルたち
 
-TODO: コンテナーを建てたり壊したりする用のスクリプトファイルの説明
+コンテナーを建てたり壊したりする用のスクリプトファイルの説明
 
-- start.sh: a
+- develop-*: go-apiを開発用に建てるときにつかう
+- deploy-*: go-apiをデプロイ用に建てるときにつかう
+- *-balus.sh: コンテナーたちの破壊する
+- *-pause.sh: コンテナーたちを停止する
+- *-reboot.sh: コンテナーたちを再起動する
+- *-rebuild.sh: コンテナーたちを再ビルド&起動する
+- *-resume.sh: コンテナーたちを再開する
 
 ## 開発者
 
