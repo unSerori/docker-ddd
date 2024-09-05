@@ -5,12 +5,13 @@ FROM debian:bullseye-slim AS builder
 WORKDIR /root/ssh-agent
 
 # ssh接続用のライブラリをインストール
-RUN apt-get update \
-    && apt-get install -y openssh-server sshpass
+RUN apt-get update && \
+    # ssh-agentはopenssh-clientに含まれてて、ssh-agentを使ってSSH接続したいコンテナのための鍵管理を行う
+    apt-get install -y openssh-client
 
-# 起動用スクリプトに渡す値を定義
-ENV CONTAINER_NAME go-api-srv
-ENV CONTAINER_PASS_FOR_SSH_AGENT=${CONTAINER_PASS_FOR_SSH_AGENT}
+# compose.ymlから値を受け取り、エントリーポイントで使う環境変数に定義
+ARG SSH_AUTH_SOCK
+ENV SSH_AUTH_SOCK_PATH=${SSH_AUTH_SOCK}
 
 # 起動用スクリプトをコピー
 COPY ./init.sh ./
