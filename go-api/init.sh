@@ -47,15 +47,12 @@ echo End of clone process branch. 2>&1 | tee -a /root/log/execute.log
 echo Start main process... 2>&1 | tee -a /root/log/execute.log
 echo -e -n "\n" 2>&1 | tee -a /root/log/execute.log
 
-echo aa
 # コンテナーを閉じないための軽量プロセス
 sleep infinity &
-echo bb
 # メインプロセスのPIDを取得
 MAIN_PID=$!
 echo "\$MAIN_PID: ${MAIN_PID}"
 
-echo cc
 # 子プロセスの終了を待つ
 wait $MAIN_PID
 

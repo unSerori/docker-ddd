@@ -32,14 +32,11 @@ eval "$(ssh-agent -a "${SSH_AUTH_SOCK_PATH}")"
 # 鍵をエージェントに登録
 ssh-add
 
-echo aa
 # メインプロセス
 sleep infinity &
-echo bb
 # メインプロセスのPIDを取得
 MAIN_PID=$!
 echo "\$MAIN_PID: ${MAIN_PID}"
-echo cc
 
 # 子プロセスの終了を待つ
 wait $MAIN_PID

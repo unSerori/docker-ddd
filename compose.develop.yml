@@ -1,7 +1,7 @@
 services:  # コンポースするサービスたち
 
     go-api-srv:  # サービスの名前
-        build:
+        build: # ビルド設定
             target: develop
             args: # ビルド時の変数
                 CONTAINER_PASS_FOR_SSH_AGENT: ${CONTAINER_PASS_FOR_SSH_AGENT:-password}
@@ -10,7 +10,7 @@ services:  # コンポースするサービスたち
             - "./go-api/log/:/root/log/" # log
             - "ssh-agent-socket:/root/ssh_agent_socket" # SSHエージェントソケットを名前付きボリュームでコンテナ間共有
         environment: # 環境変数
-            SSH_AUTH_SOCK: /root/ssh_agent_socket/ssh-agent.sock
+            SSH_AUTH_SOCK: /root/ssh_agent_socket/ssh-agent.sock # 名前付きボリュームで共有されているソケットの場所
         ports: # ホストマシンのポートとコンテナのポートをマッピング 
             - "4561:4561"
         tty: true # 仮想端末(:ターミナル)をコンテナに提供し、コンテナ内で対話的操作を可能にする # なお、ttyを設定しても、compose.services.service.commandやDockerfile.CMD, ENTRYPOINTでプロセスを指定している場合はそれが終了してしまうと継続できない
@@ -26,7 +26,7 @@ services:  # コンポースするサービスたち
 
     ssh-agent-srv: # サービス名
         container_name: ssh-agent # コンテナ名
-        build:  # ビルド設定
+        build: # ビルド設定
             context: ./ssh-agent # ビルドプロセスが実行されるパス
             dockerfile: Dockerfile  # Dockerfileのパス
             args: # ビルド時の変数

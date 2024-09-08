@@ -10,7 +10,6 @@ WORKDIR /root/copy
 RUN apt update && \
     apt install -y git openssh-client
 
-
 # デバッガインストール
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
 
