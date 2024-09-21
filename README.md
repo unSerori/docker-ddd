@@ -22,8 +22,8 @@ image Golang: go version go1.22.2 linux/amd64
     git clone git@github.com:unSerori/ddd.git
     ```
 
-3. プロジェクトルートにenvファイル作成
-    - `./env`: compose.ymlでDockerfileに対する引数として使うものや、プロジェクト全体で使う変数
+3. envファイル作成
+    - `./compose/.env`: compose.ymlでDockerfileに対する引数として使うものや、プロジェクト全体で使う変数
 
         ```env:.env
         TZ=タイムゾーン: Asia/Tokyo
@@ -31,18 +31,18 @@ image Golang: go version go1.22.2 linux/amd64
         HOST_SSH_PATH=ホストOS上のGitHubに登録済みの鍵ファイルの場所: ~/.ssh
         ```
 
-    - `./.mysql-db-srv.env`: ビルド時にmysql-db-srvコンテナーにcompose.services.service.env_fileで与える環境変数たち
+    - `./service/mysql-db/.env.mysql-db`: ビルド時にmysql-db-srvコンテナーにcompose.services.service.env_fileで与える環境変数たち
 
-        ```env:.env.mysql-db-srv
+        ```env:.env.mysql-db
         MYSQL_ROOT_PASSWORD=mysql_serverのルートユーザーパスワード: root
         MYSQL_USER=ユーザー名: ddd_user
         MYSQL_PASSWORD=MYSQL_USERのパスワード: ddd_pass
         MYSQL_DATABASE=使用するdatabase名: ddd_db
         ```
 
-    - `./go-api/.env.go-api-srv`: ビルド時にgo-api-srvコンテナーにCOPYされるenvファイル（`コンテナー内にコピーしたいリソースのため、go-api/内に置く`）
+    - `./service/go-api/.env.go-api`: ビルド時にgo-api-srvコンテナーにCOPYされるenvファイル（`コンテナー内にコピーしたいリソースのため、go-api/内に置く`）
 
-        ```env:.env.go-api-srv
+        ```env:.env.go-api
         MYSQL_USER=DBに接続する際のログインユーザ名: ddd_user
         MYSQL_PASSWORD=パスワード: ddd_pass
         MYSQL_HOST=ログイン先のDBホスト名（dockerだとサービス名）: mysql-db-srv
@@ -54,7 +54,7 @@ image Golang: go version go1.22.2 linux/amd64
         REQ_BODY_MAX_SIZE=リクエストボディのマックスサイズ（50MBなら52428800）: 52428800
         ```
 
-        詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#env)を参照TODO:
+        詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#env)を参照
 
 4. 開発またはデプロイ用のスクリプトで起動TODO:
 

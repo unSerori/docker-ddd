@@ -14,17 +14,17 @@ RUN apt update && \
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
 
 # 必要なファイルのコピー
-COPY .env.go-api-srv .env
+COPY .env.go-api .env
 
 # httpポートの公開 ここにクライアントがAPIを投げる
 EXPOSE 4561
 
 # 実行用のスクリプトあげる
-COPY ./execute.sh .
-RUN chmod +x ./execute.sh
+COPY ./init.sh .
+RUN chmod +x ./init.sh
 
 # スクリプトで起動
-ENTRYPOINT [ "./execute.sh" ]
+ENTRYPOINT [ "./init.sh" ]
 
 # デプロイ用のステージ
 
@@ -51,7 +51,7 @@ FROM debian:bullseye-slim AS deploy-final
 # 成果物のコピー
 COPY --from=deploy-builder /root/ddd/ddd/go-api /usr/local/bin/go-api
 # 実行に必要なファイルのコピー
-COPY .env.go-api-srv /usr/local/bin/.env
+COPY .env.go-api /usr/local/bin/.env
 
 # httpポートの公開 ここにクライアントがAPIを投げる
 EXPOSE 4561
