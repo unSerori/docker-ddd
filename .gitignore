@@ -20,9 +20,10 @@ Desktop.ini
 *.env*
 
 # volumes
-go-api/ddd/
-go-api/log/
-mysql-db/db_data/
+service/go-api/ddd/
+service/go-api/log/
+service/mysql-db/db_data/
+service/mysql-db/db_data_dev/
 
 # memo
 memo.txt
