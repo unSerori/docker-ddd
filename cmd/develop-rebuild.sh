@@ -3,11 +3,19 @@
 # 最初の起動や更新の反映に使う
 # 既存のイメージやキャッシュを破棄してビルド&起動し直す
 
-# 既存のコンテナの停止とそのイメージの削除 --remove-orphans: Compose ファイルで定義していないサービス用のコンテナも削除
-docker compose -f compose.yml -f compose.develop.yml down --rmi all --remove-orphans --volumes --timeout 15
+# CDに移動&初期化
+sh_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # 実行場所を相対パスで取得し、そこにサブシェルで移動、pwdで取得
+cd "$sh_dir" || {
+    echo "Failure CD command."
+    exit 1
+}
+source ./init.sh
+
+# 破棄処理
+docker compose -p "${PROJECT_NAME}_develop" down --rmi all --remove-orphans --volumes --timeout 15
 
 # キャッシュなしでビルド
-DOCKER_BUILDKIT=1 docker compose -f compose.yml -f compose.develop.yml build --no-cache
+DOCKER_BUILDKIT=1 docker compose -p "${PROJECT_NAME}_develop" -f compose.yml -f compose.develop.yml build --no-cache
 
-# ビルド&起動
-DOCKER_BUILDKIT=1 docker compose -f compose.yml -f compose.develop.yml up -d
+# 起動
+DOCKER_BUILDKIT=1 docker compose -p "${PROJECT_NAME}_develop" -f compose.yml -f compose.develop.yml up -d
