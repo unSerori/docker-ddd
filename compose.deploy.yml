@@ -1,8 +1,0 @@
-services:  # コンポースするサービスたち
-
-    go-api-srv:  # サービスの名前
-        build:
-           target: deploy-final
-        image: ddd_go_api:latest # image name
-        ports: # ホストマシンのポートとコンテナのポートをマッピング 
-            - "4561:4561" # ホストマシンのポートとコンテナのポートをマッピング
