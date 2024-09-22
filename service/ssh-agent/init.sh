@@ -22,12 +22,12 @@ stop_handler() {
 trap stop_handler SIGTERM SIGINT
 
 # ソケットファイルが存在する場合、削除してから、
-if [ -S "${SSH_AUTH_SOCK_PATH}" ]; then
-    rm -f "${SSH_AUTH_SOCK_PATH}"
+if [ -S "${SSH_AUTH_SOCK}" ]; then
+    rm -f "${SSH_AUTH_SOCK}"
 fi
 
 # ssh agentを生成&利用するソケットファイルの場所を指定して起動する # ssh-agentコマンドはプロセスを起動し、環境変数設定値とPIDの出力を行う。evalに出力を解釈させて、設定を行い、シェルとの連携が行えるようにする。なお、設定した変数はこのシェルのみ有効。
-eval "$(ssh-agent -a "${SSH_AUTH_SOCK_PATH}")"
+eval "$(ssh-agent -a "${SSH_AUTH_SOCK}")"
 
 # 鍵をエージェントに登録
 ssh-add

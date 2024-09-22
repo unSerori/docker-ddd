@@ -19,7 +19,7 @@ image Golang: go version go1.22.2 linux/amd64
 2. このリポジトリをclone
 
     ```bash
-    git clone git@github.com:unSerori/ddd.git
+    git clone git@github.com:unSerori/docker-ddd.git
     ```
 
 3. envファイル作成
@@ -27,7 +27,9 @@ image Golang: go version go1.22.2 linux/amd64
 
         ```env:.env
         TZ=タイムゾーン: Asia/Tokyo
-        CONTAINER_PASS_FOR_SSH_AGENT=開発用コンテナがssh-agentコンテナを介してgithubとssh接続するときに、ssh-agentコンテナが開発用コンテナにパスワードssh接続するためのパスワード: container_pass_for_ssh_agent
+        MYSQL_DEVELOP_HOST_PORT=MYSQLコンテナの開発用ポート: 3316
+        API_DEVELOP_HOST_PORT=APIコンテナの開発用コンテナポート: 1080
+        API_DEPLOY_HOST_PORT=80
         HOST_SSH_PATH=ホストOS上のGitHubに登録済みの鍵ファイルの場所: ~/.ssh
         ```
 
@@ -56,25 +58,73 @@ image Golang: go version go1.22.2 linux/amd64
 
         詳しくはgo-api-srv上でビルドされる[dddのREADME](https://github.com/unSerori/ddd/blob/main/README.md#env)を参照
 
-4. 開発またはデプロイ用のスクリプトで起動TODO:
+4. 開発またはデプロイ用のスクリプトで起動
 
     ```bash
     # 開発用の設定でビルド
-    bash develop-rebuild.sh
+    bash ./cmd/develop-rebuild.sh
 
     # デプロイ用の設定でビルド
-    bash deploy-rebuild.sh
+    bash ./cmd/deploy-rebuild.sh
     ```
 
     その他のスクリプトファイルは[スクリプトファイルたち](#スクリプトファイルたち)
 
+### 環境に入る
+
+1. VS Codeでアタッチ  
+    VS CodeのDocker, Remote Development拡張機能をインストール、Dockerタブのコンテナーを右クリックし「Attach Visual Studio Code」でVS Codeの機能をフルに使って開発できる
+
+1. コマンドで入りコマンドラインで作業
+
+    ```bash
+    docker exec -it juninry_go-api /bin/bash
+    ```
+
+    またはDockerタブのコンテナーを右クリックし「Attach Shell」
+
+### 開発用コンテナー内でSSH通信でGitHubとやりとりする方法
+
+1. コンテナー内でssh-keygenして鍵を生成しGitHubに登録
+2. 登録済みのホストの鍵を手動コピーまたはvolumesに追加
+3. 開発用ビルドで立ち上がるssh-agentコンテナーを経由してホストOSの鍵を利用する
+4. Attach VS Codeでインストールされるvscode-serverを経由してホストOSの鍵を利用する
+
+などがある
+
+1. 不便かつ鍵をコンテナーに置きたくないため割愛
+2. コンテナーに置きたくないため割愛
+3. 開発コンテナーにアタッチしたときにホストOSの鍵を利用しSSH通信できる  
+    .envの`HOST_SSH_PATH`にホストOSの鍵の場所を書く必要がある  
+    デフォルトだと`~/.ssh`で、とくにwindowsは`%USERPROFILE%\.ssh`のように書かなければならない  
+    ただしAttach VS Code(:4)した際はコンテナーにvscode-serverがインストールされ、$SSH_AUTH_SOCKが上書きされ使えないので、4の方法メインで使うならあまりつかわないかも
+4. コーディングするとき便利なAttach VS Codeのssh-agent転送機能を利用してホストOSの鍵を利用できる  
+    あらかじめホストOSでssh-agentの起動と鍵の登録を行う必要がある  
+
+    ```bash
+    # ssh-agentの起動
+    eval $(ssh-agent)
+    # 鍵の登録
+    ssh-add
+    ```
+
+## ディレクトリ構成
+
+TODO: `tree -LFa 3 --dirsfirst`に加筆修正
+
+```txt
+./docker-juninry
+```
+
 ## スクリプトファイルたち
 
-コンテナーを建てたり壊したりする用のスクリプトファイルの説明
+コンテナーを建てたり壊したりする用のスクリプトファイルの説明  
+`./cmd/`直下に置いてある
 
-- develop-*: go-apiを開発用に建てるときにつかう
+- balus.sh: コンテナーたちを破壊する
 - deploy-*: go-apiをデプロイ用に建てるときにつかう
-- *-balus.sh: コンテナーたちの破壊する
+- develop-*: go-apiを開発用に建てるときにつかう
+- *-destroy: コンテナーたちを破棄する
 - *-pause.sh: コンテナーたちを停止する
 - *-reboot.sh: コンテナーたちを再起動する
 - *-rebuild.sh: コンテナーたちを再ビルド&起動する
