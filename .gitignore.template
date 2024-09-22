@@ -43,10 +43,6 @@ memo.*
 ## Docker-related items
 
 # volumes
-service/go-api/ddd/
-service/go-api/log/
-service/mysql-db/db_data/
-service/mysql-db/db_data_dev/
 
 ## Project-specific items
 

@@ -34,7 +34,7 @@ if [ -d "/root/ddd/" ] && [ -z "$(ls -A "/root/ddd/")" ]; then # -dでディレ�
     echo Clone now... 2>&1 | tee -a /root/log/execute.log
 
     # ソースコードのリポジトリをクローン、
-    git clone https://github.com/unSerori/ddd.git /root/ddd/./
+    git clone https://github.com/unSerori/ddd.git -b develop /root/ddd/./
     # copyされたファイルを適切な場所に移行
     mv .env /root/ddd/
 else
@@ -47,22 +47,19 @@ echo End of clone process branch. 2>&1 | tee -a /root/log/execute.log
 echo Start main process... 2>&1 | tee -a /root/log/execute.log
 echo -e -n "\n" 2>&1 | tee -a /root/log/execute.log
 
-echo aa
 # コンテナーを閉じないための軽量プロセス
 sleep infinity &
-echo bb
 # メインプロセスのPIDを取得
 MAIN_PID=$!
 echo "\$MAIN_PID: ${MAIN_PID}"
 
-echo cc
 # 子プロセスの終了を待つ
 wait $MAIN_PID
 
 # コンテナを動かし続ける compose.commandにもこれ書きがちだけど、commandにプロセス書くならttyでいいかもしれない
 # tail -f /dev/null
 
-# これは終了シグナルtrip形式でも動く
+# これは終了シグナルtrap形式でも動く
 # sleep infinity
 
 # ただの一行無限ループ
