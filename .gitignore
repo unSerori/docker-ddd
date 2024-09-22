@@ -53,13 +53,10 @@ service/mysql-db/db_data_dev/
 # ライブラリなどリポジトリに含める必要のないディレクトリ
 
 # デバッグ時のファイル
-__debug_bin*
 
 # asset direcotry
-/asset/*/*
 
 # upload directory
-/upload/users/icons/*
 
 ## Others items
 
