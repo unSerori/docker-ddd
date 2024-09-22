@@ -43,23 +43,16 @@ memo.*
 ## Docker-related items
 
 # volumes
-service/go-api/ddd/
-service/go-api/log/
-service/mysql-db/db_data/
-service/mysql-db/db_data_dev/
 
 ## Project-specific items
 
 # ライブラリなどリポジトリに含める必要のないディレクトリ
 
 # デバッグ時のファイル
-__debug_bin*
 
 # asset direcotry
-/asset/*/*
 
 # upload directory
-/upload/users/icons/*
 
 ## Others items
 
