@@ -62,5 +62,3 @@ service/mysql-db/db_data_dev/
 
 # empty directory
 !.gitignore
-
-# hoge
