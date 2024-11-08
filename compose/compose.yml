@@ -10,6 +10,7 @@ services:  # コンポースするサービスたち
         depends_on: # 開始順序とその条件を担保
             mysql-db-srv:
                 condition: service_healthy # ヘルスチェック
+        restart: always  # コンテナの再起動
         networks: # 定義したネットワークを利用
             - ddd_db-net # dbに接続するネットワーク
 
