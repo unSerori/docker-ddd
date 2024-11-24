@@ -2,7 +2,7 @@
 
 ## 概要
 
-[qiitaで書いたDDD備忘録記事のサンプルリポジトリ](https://github.com/unSerori/ddd)を動かすDocker環境  
+[qiitaで書いたDDD備忘録記事のサンプルリポジトリ](https://github.com/unSerori/sample-ddd-gin-api)を動かすDocker環境  
 cloneしてスクリプト実行で、自動的にコンテナー作成と開発環境（: またはデプロイ）を行う  
 
 ### 環境
