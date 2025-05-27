@@ -10,7 +10,7 @@ services:  # コンポースするサービスたち
         depends_on: # 開始順序とその条件を担保
             mysql-db-srv:
                 condition: service_healthy # ヘルスチェック
-        restart: always  # コンテナの再起動
+        # restart: always  # コンテナの再起動
         networks: # 定義したネットワークを利用
             - ddd_db-net # dbに接続するネットワーク
 
@@ -28,7 +28,7 @@ services:  # コンポースするサービスたち
             timeout: 5s # タイムアウトの長さ default: 30s
             start_period: 5s # 最初のうちどれぐらいの期間失敗を無視するか default: 0s
             retries: 4 # リトライ回数 default: 3
-        restart: always  # コンテナの再起動
+        # restart: always  # コンテナの再起動
         networks: # 定義したネットワークを利用
             - ddd_db-net # dbに接続するネットワーク
 
